@@ -1,15 +1,23 @@
--- insures lazy is installed
-local lazypath = vim.loop.os_tmpdir() .. '/lazy/lazy.nvim'
+-- pick a temp root
+local tmp = vim.loop.os_tmpdir() .. '/nvim-temp'
+
+vim.env.XDG_DATA_HOME = tmp .. '/data'
+vim.env.XDG_CACHE_HOME = tmp .. '/cache'
+vim.env.XDG_STATE_HOME = tmp .. '/state'
+
+local lazypath = vim.env.XDG_DATA_HOME .. '/lazy/lazy.nvim'
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=stable',
     lazypath,
   })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
