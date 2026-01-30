@@ -121,7 +121,14 @@ function M.piolsp()
     end
   end
   vim.notify('LSP config generation completed!', vim.log.levels.INFO)
-  vim.cmd('LspRestart')
+
+  if vim.fn.has('nvim-0.12') then
+    if #vim.lsp.get_clients() > 0 then
+      vim.cmd('lsp restart')
+    end
+  else
+    vim.cmd('LspRestart')
+  end
 end
 
 return M
