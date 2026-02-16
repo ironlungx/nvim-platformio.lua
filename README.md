@@ -35,6 +35,40 @@ Install the plugin using lazy
 return {
   'anurag3301/nvim-platformio.lua',
 
+  -- Dependencies are lazy-loaded by default unless specified otherwise.
+  dependencies = {
+    { 'akinsho/toggleterm.nvim' },
+    { 'nvim-telescope/telescope.nvim' },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'nvim-lua/plenary.nvim' },
+    { 'folke/which-key.nvim' },
+    { 'nvim-treesitter/nvim-treesitter' }
+  },
+}
+```
+
+
+#### Configuration
+```lua
+vim.g.pioConfig ={
+  lsp = 'clangd',           -- value: clangd | ccls 
+  clangd_source = 'ccls',    -- value: ccls | compiledb, For detailed explation check :help platformio-clangd_source
+  menu_key = '<leader>\\',  -- replace this menu key  to your convenience
+  debug = false             -- enable debug messages
+} 
+local pok, platformio = pcall(require, 'platformio')
+if pok then platformio.setup(vim.g.pioConfig) end
+```
+
+#### Usage `:h PlatformIO`
+
+#### Lazy::cond
+The `cond` argument can be used to enable the plugin only if `platformio.ini` is present in cwd or you explicidly run `:Pioinit`
+
+```lua
+return {
+  'anurag3301/nvim-platformio.lua',
+
   -- optional: cond used to enable/disable platformio
   -- based on existance of platformio.ini file and .pio folder in cwd.
   -- You can enable platformio plugin, using :Pioinit command
@@ -83,19 +117,6 @@ return {
 }
 ```
 
-#### Usage `:h PlatformIO`
-
-### Configuration
-```lua
-vim.g.pioConfig ={
-  lsp = 'clangd',           -- value: clangd | ccls 
-  clangd_source = 'ccls',    -- value: ccls | compiledb, For detailed explation check :help platformio-clangd_source
-  menu_key = '<leader>\\',  -- replace this menu key  to your convenience
-  debug = false             -- enable debug messages
-} 
-local pok, platformio = pcall(require, 'platformio')
-if pok then platformio.setup(vim.g.pioConfig) end
-```
 
 ### Keybinds
 These are the default keybindings, which you can override in your configuration.
