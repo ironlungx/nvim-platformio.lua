@@ -106,6 +106,8 @@ function M.piolsp()
   if not utils.pio_install_check() then
     return
   end
+  utils.cd_pioini()
+
   if config.lsp == 'clangd' and config.clangd_source == 'compiledb' then
     utils.shell_cmd_blocking('pio run -t compiledb')
     gitignore_lsp_configs('compile_commands.json')
